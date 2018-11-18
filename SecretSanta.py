@@ -1,27 +1,53 @@
 import random
 
-def generatePairs(file):
+# function    :  getParticipants
+# input       :  none
+# output      :  list participants
+# description :  get user input and add to a list of participants
+def getParticipants():
+    participants = []
+    print("Please enter a name. Type 'done' to finish.")
+    p = input('> ')
 
-    people = ['alif', 'sarah', 'shishir', 'pawel', 'ahmad', 'noah',
-    'tubby', 'brandon', 'greg', 'bobby', 'kwong', 'niggest', 'cross', 'anthony']
+    while p != 'done':
+        participants.append(p)
+        p = input('> ')
+
+    return participants
+
+# function    :  writeToFile
+# input       :  str user1, str user1, file file
+# output      :  none
+# description :  write the names of user 1 and user2 to a given file
+def writeToFile(user1, user2, file):
+    newstr = user1 + ' will buy a gift for ' + user2 + '\n'
+    file.write(newstr)
+
+# function    :  generatePairs
+# input       :  list people, file file
+# output      :  none
+# description :  generate secret Santa pairs
+def generatePairs(people, file):
 
     pairs = {}
 
+    # randomize the list of pe
     random.shuffle(people)
 
+    # iterate over each person
     for p in people:
         for i in range(len(people)):
-            if p != people[i]:
-                if people[i] not in pairs.values():
+            # check if p is being assigned to themselves and check if people[i]
+            # has already been assigned to someone else
+            if people[i] != p and people[i] not in pairs.values():
                     pairs[p] = people[i]
-        newstr = p + ' will buy a gift for ' + pairs[p] + '\n'
-        file.write(newstr)
-
-    return pairs
+        writeToFile(p, pairs[p], file)
 
 def main():
-    f = open('SecretSanta.txt', 'w+')
-    generatePairs(f)
-    f.close()
+    participants = getParticipants()
+
+    newFile = open('SecretSanta2.txt', 'w+')
+    generatePairs(participants, newFile)
+    newFile.close()
 
 main()
