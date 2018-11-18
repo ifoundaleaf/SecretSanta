@@ -1,3 +1,6 @@
+# Alif Islam
+# Sunday, November 18, 2018
+
 import random
 
 # function    :  getParticipants
@@ -50,7 +53,7 @@ def generatePairs(people, file):
 def main():
     participants = getParticipants()
 
-    newFile = open('SecretSanta2.txt', 'w+')
+    newFile = open('SecretSanta.txt', 'w+')
     generatePairs(participants, newFile)
     newFile.close()
 
