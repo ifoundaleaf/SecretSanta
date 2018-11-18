@@ -6,12 +6,16 @@ import random
 # description :  get user input and add to a list of participants
 def getParticipants():
     participants = []
-    print("Please enter a name. Type 'done' to finish.")
+
+    print("Please enter the text file name (with extension) to extract the participant list from.")
     p = input('> ')
 
-    while p != 'done':
-        participants.append(p)
-        p = input('> ')
+    oldFile = open(p, 'r+')
+
+    # extract each participant from the text file and add to the list participants
+    for line in oldFile:
+        # strip the newline character from each participant
+        participants.append(line.rstrip())
 
     return participants
 
