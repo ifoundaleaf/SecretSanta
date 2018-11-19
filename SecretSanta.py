@@ -5,10 +5,11 @@ import random
 
 # function    :  getParticipants
 # input       :  none
-# output      :  list participants
+# output      :  list participants, list participants2
 # description :  get user input and add to a list of participants
 def getParticipants():
-    participants = []
+    participants  = []
+    participants2 = []
 
     print("Please enter the text file name (with extension) to extract the participant list from.")
     p = input('> ')
@@ -19,8 +20,9 @@ def getParticipants():
     for line in oldFile:
         # strip the newline character from each participant
         participants.append(line.rstrip())
+        participants2.append(line.rstrip())
 
-    return participants
+    return participants, participants2
 
 # function    :  writeToFile
 # input       :  str user1, str user1, file file
@@ -34,27 +36,30 @@ def writeToFile(user1, user2, file):
 # input       :  list people, file file
 # output      :  none
 # description :  generate secret Santa pairs
-def generatePairs(people, file):
+def generatePairs(giver, receiver, file):
 
     pairs = {}
 
-    # randomize the list of pe
-    random.shuffle(people)
+    # randomize the list of people and the group
+    random.shuffle(giver)
+    random.shuffle(receiver)
 
     # iterate over each person
-    for p in people:
-        for i in range(len(people)):
+    for g in giver:
+        for r in receiver:
             # check if p is being assigned to themselves and check if people[i]
             # has already been assigned to someone else
-            if people[i] != p and people[i] not in pairs.values():
-                    pairs[p] = people[i]
-        writeToFile(p, pairs[p], file)
+            if r != g:
+                if r not in pairs.values():
+                    pairs[g] = r
+
+        writeToFile(g, pairs[g], file)
 
 def main():
-    participants = getParticipants()
+    participants, participants2 = getParticipants()
 
     newFile = open('SecretSanta.txt', 'w+')
-    generatePairs(participants, newFile)
+    generatePairs(participants, participants2, newFile)
     newFile.close()
 
 main()
